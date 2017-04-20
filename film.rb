@@ -8,6 +8,7 @@ questions = JSON.parse(dark_side.films)
 ap.questions
 ap.questions["films"]
 
+#week 3 day 1
 
 # class MoneyExchanger
 #   def convert(amount, currency, from = "USD")
