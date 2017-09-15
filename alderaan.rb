@@ -1,4 +1,9 @@
+require 'httparty'
+require 'json'
 
+SWAPI_BASE_URL="http://swapi.co/api/"
+
+response = HTTParty.get(SWAPI_BASE_URL)
 
 loop do
   puts "** Which is the Coolest STAR WARS film? **
