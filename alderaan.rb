@@ -1,6 +1,6 @@
 require 'httparty'
 require 'json'
-require 'awesome_print'
+require_relative 'ap'
 
 SWAPI_BASE_URL="http://swapi.co/api/"
 
