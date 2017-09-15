@@ -1,14 +1,20 @@
 require 'httparty'
 require 'json'
-require 'ap'
+require 'awesome_print'
 
-dark_side = HTTParty.get("http://swapi.co/api/")
+SWAPI = "http://swapi.co/api/"
 
-questions = JSON.parse(dark_side.films)
+response = HTTParty.get(SWAPI)
+
+questions = JSON.parse(response.films)
+endpoints = JSON.parse(response.body)
+
+
 ap.questions
 ap.questions["films"]
 
 #week 3 day 1
+
 
 # class MoneyExchanger
 #   def convert(amount, currency, from = "USD")
