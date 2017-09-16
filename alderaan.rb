@@ -4,8 +4,6 @@ require_relative 'ap'
 require_relative 'film'
 require_relative 'character'
 
-
-
 # Running the command line "ruby alderaan.rb" will render a list of Star War movie titles to choose from.
 
 class Menu
