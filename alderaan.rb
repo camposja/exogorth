@@ -2,42 +2,56 @@ require 'httparty'
 require 'json'
 require_relative 'ap'
 
-SWAPI_BASE_URL="http://swapi.co/api/"
+
 
 # Running the command line "ruby alderaan.rb" will render a list of Star War movie titles to choose from.
 
-# Get the root list of API endpoints
-response = HTTParty.get(SWAPI_BASE_URL)
-urls = JSON.parse(response.body)
+class Menu
+  SWAPI_BASE_URL="http://swapi.co/api/"
 
-film_url = urls["films"]
+  def main_menu
+    # Get the root list of API endpoints
+    response = HTTParty.get(SWAPI_BASE_URL)
+    urls = JSON.parse(response.body)
 
-response = HTTParty.get(film_url)
-json = JSON.parse(response.body)
-films = json["results"]
+    film_url = urls["films"]
 
-loop do
-  puts "0 - exit"
-  films.each_with_index do |film, index|
-    puts "#{index + 1} - #{film["title"]}"
-  end
+    response = HTTParty.get(film_url)
+    json = JSON.parse(response.body)
+    films = json["results"]
 
-  print "What film do you want informaion on? "
-  choice = gets.chomp.to_i
-  if choice == 0
-    exit
-  end
+    loop do
+      puts "0 - exit"
+      films.each_with_index do |film, index|
+        puts "#{index + 1} - #{film["title"]}"
+      end
 
-  # When a user selects a title, they are presented with the opening crawl for the movie
-  # and asked if they would like to learn more or select another title.
+      print "What film do you want informaion on? "
+      choice = gets.chomp.to_i
+      if choice == 0
+        exit
+      end
 
-  film = films[choice - 1]
-  puts film["opening_crawl"]
+      # When a user selects a title, they are presented with the opening crawl for the movie
+      # and asked if they would like to learn more or select another title.
 
-  print "Learn more? [y/n]: "
-  choice = gets.chomp.downcase
-  if choice == "y"
-    # show more
-    puts "Show more"
+      film = films[choice - 1]
+      puts film["opening_crawl"]
+
+      print "Learn more? [y/n]: "
+      choice = gets.chomp.downcase
+      if choice == "y"
+        # show more
+        # they get a list of characters presented.
+        characters = film["characters"]
+
+        characters.each do |character|
+          puts character
+        end
+      end
+    end
   end
 end
+
+menu = Menu.new
+menu.main_menu
