@@ -1,6 +1,8 @@
 require 'httparty'
 require 'json'
 require_relative 'ap'
+require_relative 'film'
+require_relative 'character'
 
 
 
@@ -18,43 +20,38 @@ class Menu
 
     response = HTTParty.get(film_url)
     json = JSON.parse(response.body)
-    @films = json["results"]
+    # Tuen an array of hashes (results) into an array of 'Film' objects.
+    @films = json["results"].map { |hash| Film.new(hash) }
   end
 
   def main_menu
     loop do
       puts "0 - exit"
       @films.each_with_index do |film, index|
-        puts "#{index + 1} - #{film["title"]}"
+        puts "#{index + 1} - #{film.title}"
       end
 
       print "What film do you want informaion on? "
       choice = gets.chomp.to_i
       if choice == 0
-        exit
+        return
       end
 
       # When a user selects a title, they are presented with the opening crawl for the movie
       # and asked if they would like to learn more or select another title.
-
-      film = @films[choice - 1]
-
-      show_film(film)
+      show_film(@films[choice - 1])
     end
   end
 
   def show_film(film_to_show)
-    puts film_to_show["opening_crawl"]
+    puts film_to_show.opening_crawl
 
     print "Learn more? [y/n]: "
     choice = gets.chomp.downcase
     if choice == "y"
       # show more
-      # they get a list of characters presented.
-      characters = film_to_show["characters"]
-
-      characters.each do |character|
-        puts character
+      film_to_show.characters.each do |character|
+        puts character.name
       end
     end
   end
