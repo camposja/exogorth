@@ -9,7 +9,7 @@ require_relative 'ap'
 class Menu
   SWAPI_BASE_URL="http://swapi.co/api/"
 
-  def main_menu
+  def initialize
     # Get the root list of API endpoints
     response = HTTParty.get(SWAPI_BASE_URL)
     urls = JSON.parse(response.body)
@@ -18,11 +18,13 @@ class Menu
 
     response = HTTParty.get(film_url)
     json = JSON.parse(response.body)
-    films = json["results"]
+    @films = json["results"]
+  end
 
+  def main_menu
     loop do
       puts "0 - exit"
-      films.each_with_index do |film, index|
+      @films.each_with_index do |film, index|
         puts "#{index + 1} - #{film["title"]}"
       end
 
@@ -35,19 +37,24 @@ class Menu
       # When a user selects a title, they are presented with the opening crawl for the movie
       # and asked if they would like to learn more or select another title.
 
-      film = films[choice - 1]
-      puts film["opening_crawl"]
+      film = @films[choice - 1]
 
-      print "Learn more? [y/n]: "
-      choice = gets.chomp.downcase
-      if choice == "y"
-        # show more
-        # they get a list of characters presented.
-        characters = film["characters"]
+      show_film(film)
+    end
+  end
 
-        characters.each do |character|
-          puts character
-        end
+  def show_film(film_to_show)
+    puts film_to_show["opening_crawl"]
+
+    print "Learn more? [y/n]: "
+    choice = gets.chomp.downcase
+    if choice == "y"
+      # show more
+      # they get a list of characters presented.
+      characters = film_to_show["characters"]
+
+      characters.each do |character|
+        puts character
       end
     end
   end
