@@ -14,9 +14,11 @@ film_endpoint = endpoints["films"]
 
 response = HTTParty.get(film_endpoint)
 films = JSON.parse(response.body)
-ap films
+films = JSON["results"]
 
-
+films each do |film|
+  puts film["title"]
+end
 
 # loop do
 #   puts "** Which is the Coolest STAR WARS film? **
