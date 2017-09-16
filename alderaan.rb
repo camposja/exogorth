@@ -8,28 +8,18 @@ SWAPI_BASE_URL="http://swapi.co/api/"
 
 # Get the root list of API endpoints
 response = HTTParty.get(SWAPI_BASE_URL)
-endpoints = JSON.parse(response.body)
+urls = JSON.parse(response.body)
 
-film_endpoint = endpoints["films"]
+film_url = urls["films"]
 
-response = HTTParty.get(film_endpoint)
-films = JSON.parse(response.body)
-films = JSON["results"]
+response = HTTParty.get(film_url)
+json = JSON.parse(response.body)
+films = json["results"]
 
-films each do |film|
-  puts film["title"]
+films.each_with_index do |film, index|
+  puts "#{index + 1} - #{film["title"]}"
 end
 
-# loop do
-#   puts "** Which is the Coolest STAR WARS film? **
-#   1.) The Phantom Menace
-#   2.) Attack of the Clones
-#   3.) Revenge of the Sith
-#   4.) A New Hope
-#   5.) The Empire Strikes Back
-#   6.) Return of the Jedi
-#   7.) The Force Awakens"
-#   selection = gets.chomp
-# end
-#
-# return selection
+print "What film do you want informaion on? "
+choice = gets.chomp.to_i
+puts "You chose #{choice}"

@@ -1,5 +1,5 @@
-
 require 'awesome_print'
+
 AwesomePrint.defaults = {
   plain: false,
   index: false,
