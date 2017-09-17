@@ -6,10 +6,9 @@ class Film
 
     @title = hash["title"]
     @opening_crawl = hash["opening_crawl"]
-    @characters = hash["characters"]
   end
 
   def characters
-    @hash["characters"]. map { |url| Characters.new(url) }
+    @characters ||= @hash["characters"]. map { |url| Characters.new(url) }
   end
 end

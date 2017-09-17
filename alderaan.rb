@@ -44,20 +44,31 @@ class Menu
   def show_film(film_to_show)
     puts film_to_show.opening_crawl
 
-    print "Learn more? [y/n]: "
-    choice = gets.chomp.downcase
-    if choice == "y"
-      # show more
+    loop do
+      print "Learn more? [y/n]: "
+      choice = gets.chomp.downcase
+      if choice == 'n'
+        return
+      end
+      
       film_to_show.characters.each_with_index do |character, index|
         puts "#{index + 1} - #{character.name}"
       end
 
+      puts "Choose a character: "
       choice = gets.chomp.to_i
-      puts "Choice: #{choice}"
 
       character = film_to_show.characters[choice - 1]
-      puts "The character's name is: #{character.name}"
+      show_bio(character)
     end
+  end
+
+  def show_bio(character)
+    puts "The character's name is: #{character.name}"
+    puts "The character's birth year is: #{character.birth_year}"
+    puts "The character's Homeworld is: #{character.homeworld}"
+    puts "The character's Species is: #{character.species}"
+    puts "The character's Starships are: #{character.starships}"
   end
 end
 
