@@ -48,9 +48,15 @@ class Menu
     choice = gets.chomp.downcase
     if choice == "y"
       # show more
-      film_to_show.characters.each do |character|
-        puts character.name
+      film_to_show.characters.each_with_index do |character, index|
+        puts "#{index + 1} - #{character.name}"
       end
+
+      choice = gets.chomp.to_i
+      puts "Choice: #{choice}"
+
+      character = film_to_show.characters[choice - 1]
+      puts "The character's name is: #{character.name}"
     end
   end
 end
