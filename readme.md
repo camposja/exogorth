@@ -13,4 +13,4 @@ Exercise consuming the Star Wars API:
 
 * If they choose one of those, they can read a character bio and are asked if they'd like to go back to the movie or to select another title.
 
-* You should have classes that define objects to represent the API responses. If you are testing, these classes should have tests! .
+* You should have classes that define objects to represent the API responses. If you are testing, these classes should have tests! 
