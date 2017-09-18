@@ -53,8 +53,8 @@ class Menu
         return
       end
 
-      film_to_show.characters.each_with_index do |character, index|
-        puts "#{index + 1} - #{character.name}"
+      show_choices(film_to_show.characters, "") do |character|
+        puts " - #{character.name}"
       end
 
       puts "Choose a character: "
