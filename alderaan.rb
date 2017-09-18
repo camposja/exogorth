@@ -31,7 +31,7 @@ class Menu
         puts " - #{film.title}"
       end
 
-      print "What film do you want informaion on? "
+      print "What film do you want information on? "
       choice = gets.chomp.to_i
       if choice == 0
         return
