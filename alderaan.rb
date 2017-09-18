@@ -14,12 +14,7 @@ class Menu
     response = HTTParty.get(SWAPI_BASE_URL)
     urls = JSON.parse(response.body)
 
-    film_url = urls["films"]
-
-    response = HTTParty.get(film_url)
-    json = JSON.parse(response.body)
-    # Tuen an array of hashes (results) into an array of 'Film' objects.
-    @films = json["results"].map { |hash| Film.new(hash) }
+    @films = Film.all(urls["films"])
   end
 
   def main_menu
@@ -50,7 +45,7 @@ class Menu
       if choice == 'n'
         return
       end
-      
+
       film_to_show.characters.each_with_index do |character, index|
         puts "#{index + 1} - #{character.name}"
       end
