@@ -17,11 +17,18 @@ class Menu
     @films = Film.all(urls["films"])
   end
 
+  def show_choices(array_of_things, zero_message)
+    puts "0 - Exit"
+    array_of_things.each_with_index do |thing, index|
+      print "#{index + 1}"
+      yield thing
+    end
+  end
+
   def main_menu
     loop do
-      puts "0 - exit"
-      @films.each_with_index do |film, index|
-        puts "#{index + 1} - #{film.title}"
+      show_choices(@films, "0 - Exit") do |film|
+        puts " - #{film.title}"
       end
 
       print "What film do you want informaion on? "
