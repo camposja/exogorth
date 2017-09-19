@@ -1,6 +1,4 @@
 class Film
-  attr_reader :title, :opening_crawl
-
   # Return all film objects by asking the API for them
   def self.all(films_url)
     response = HTTParty.get(films_url)
@@ -10,11 +8,14 @@ class Film
     json["results"].map { |hash| Film.new(hash) }
   end
 
-  def initialize(hash)
-    @hash = hash
+  def initialize(details)
+    @hash = details
 
-    @title = hash["title"]
-    @opening_crawl = hash["opening_crawl"]
+    %w{title opening_crawl}.each do |attribute|
+      define_singleton_method(attribute) do
+        details[attribute]
+      end
+    end
   end
 
   def characters
