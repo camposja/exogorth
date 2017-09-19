@@ -9,7 +9,7 @@ class Film
   end
 
   def initialize(details)
-    @hash = details
+    @details = details
 
     %w{title opening_crawl}.each do |attribute|
       define_singleton_method(attribute) do
@@ -19,6 +19,6 @@ class Film
   end
 
   def characters
-    @characters ||= @hash["characters"]. map { |url| Characters.new(url) }
+    @characters ||= @details["characters"]. map { |url| Characters.new(url) }
   end
 end
