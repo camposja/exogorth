@@ -17,22 +17,25 @@ class Menu
     @films = Film.all(urls["films"])
   end
 
-  def show_choices(array_of_things, zero_message)
+  def show_choices(array_of_things, zero_message, choice_message)
     puts "0 - Exit"
     array_of_things.each_with_index do |thing, index|
       print "#{index + 1}"
       yield thing
     end
+
+    print choice_message
+    choice = gets.chomp.to_i
+
+    return choice
   end
 
   def main_menu
     loop do
-      show_choices(@films, "0 - Exit") do |film|
+      choice = show_choices(@films, "0 - Exit", "What movie do you want information on? ") do |film|
         puts " - #{film.title}"
       end
 
-      print "What film do you want information on? "
-      choice = gets.chomp.to_i
       if choice == 0
         return
       end
@@ -53,12 +56,9 @@ class Menu
         return
       end
 
-      show_choices(film_to_show.characters, "") do |character|
+      choice = show_choices(film_to_show.characters, "", "Choose a character: ") do |character|
         puts " - #{character.name}"
       end
-
-      puts "Choose a character: "
-      choice = gets.chomp.to_i
 
       character = film_to_show.characters[choice - 1]
       show_bio(character)
