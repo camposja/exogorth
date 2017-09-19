@@ -1,4 +1,6 @@
 class Film
+  include SwapiAttribute
+
   # Return all film objects by asking the API for them
   def self.all(films_url)
     response = HTTParty.get(films_url)
@@ -11,11 +13,7 @@ class Film
   def initialize(details)
     @details = details
 
-    %w{title opening_crawl}.each do |attribute|
-      define_singleton_method(attribute) do
-        details[attribute]
-      end
-    end
+    define_attributes(%w{title opening_crawl}, details)
   end
 
   def characters
