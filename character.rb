@@ -3,8 +3,7 @@ class Characters
 
   def initialize(url)
     response = HTTParty.get(url)
-    details = JSON.parse(response.body)
 
-    define_attributes(%w{name birth_year eye_color gender hair_color homeworld species starships}, details)
+    define_attributes(%w{name birth_year eye_color gender hair_color homeworld species starships}, response.parsed_response)
   end
 end

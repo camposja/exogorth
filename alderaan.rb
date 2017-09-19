@@ -1,5 +1,4 @@
 require 'httparty'
-require 'json'
 require_relative 'ap'
 require_relative 'swapi_attribute'
 require_relative 'film'
@@ -16,7 +15,7 @@ class Menu
     response = HTTParty.get(SWAPI_BASE_URL)
     urls = JSON.parse(response.body)
 
-    @films = Film.all(urls["films"])
+    @films = Film.all(response.parsed_response["films"])
   end
 
   def show_choices(array_of_things, zero_message, choice_message)
