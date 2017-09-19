@@ -20,11 +20,13 @@ class Menu
   end
 
   def show_choices(array_of_things, zero_message, choice_message)
-    puts "0 - Exit"
+    choices = []
+    choices << [0, "Exit"]
     array_of_things.each_with_index do |thing, index|
-      print "#{index + 1}"
-      yield thing
+      choices << [index + 1, yield(thing)]
     end
+
+    puts Terminal::Table.new(rows: choices)
 
     print choice_message
 
@@ -34,7 +36,7 @@ class Menu
   def main_menu
     loop do
       choice = show_choices(@films, "0 - Exit", "What movie do you want information on? ") do |film|
-        puts " - #{film.title}"
+        film.title
       end
 
       return if choice == 0
@@ -56,7 +58,7 @@ class Menu
       end
 
       choice = show_choices(film_to_show.characters, "", "Choose a character: ") do |character|
-        puts " - #{character.name}"
+        character.name
       end
 
       show_bio(film_to_show.characters[choice - 1])
@@ -64,19 +66,11 @@ class Menu
   end
 
   def show_bio(character)
-    info = []
-    info << ['name', character.name]
-    info << ['birth year', character.birth_year]
-    info << ['eye color', character.eye_color]
-    info << ['gender', character.gender]
-    info << ['hair color', character.hair_color]
-    info << ['homeworld', character.homeworld]
-    info << ['species', character.species]
-    # info << ['starships', character.starships]
-    table = Terminal::Table.new :rows => info
+    info = %w{name birth_year eye_color gender hair_color homeworld species}.map do |attribute|
+      [attribute.gsub("_", " "), character.send(attribute)]
+    end
 
-
-    puts table
+    puts Terminal::Table.new(rows: info)
   end
 end
 
