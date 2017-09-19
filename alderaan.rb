@@ -25,9 +25,8 @@ class Menu
     end
 
     print choice_message
-    choice = gets.chomp.to_i
 
-    return choice
+    gets.chomp.to_i
   end
 
   def main_menu
@@ -60,8 +59,7 @@ class Menu
         puts " - #{character.name}"
       end
 
-      character = film_to_show.characters[choice - 1]
-      show_bio(character)
+      show_bio(film_to_show.characters[choice - 1])
     end
   end
 
