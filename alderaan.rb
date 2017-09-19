@@ -3,6 +3,7 @@ require_relative 'ap'
 require_relative 'swapi_attribute'
 require_relative 'film'
 require_relative 'character'
+require 'terminal-table'
 
 
 # Running the command line "ruby alderaan.rb" will render a list of Star War movie titles to choose from.
@@ -36,9 +37,7 @@ class Menu
         puts " - #{film.title}"
       end
 
-      if choice == 0
-        return
-      end
+      return if choice == 0
 
       # When a user selects a title, they are presented with the opening crawl for the movie
       # and asked if they would like to learn more or select another title.
@@ -65,14 +64,19 @@ class Menu
   end
 
   def show_bio(character)
-    puts "The character's name is: #{character.name}"
-    puts "The character's birth year is: #{character.birth_year}"
-    puts "The character's eye color is: #{character.eye_color}"
-    puts "The character's gender is: #{character.gender}"
-    puts "The character's hair color is: #{character.hair_color}"
-    puts "The character's Homeworld is: #{character.homeworld}"
-    puts "The character's Species is: #{character.species}"
-    puts "The character's Starships are: #{character.starships}"
+    info = []
+    info << ['name', character.name]
+    info << ['birth year', character.birth_year]
+    info << ['eye color', character.eye_color]
+    info << ['gender', character.gender]
+    info << ['hair color', character.hair_color]
+    info << ['homeworld', character.homeworld]
+    info << ['species', character.species]
+    # info << ['starships', character.starships]
+    table = Terminal::Table.new :rows => info
+
+
+    puts table
   end
 end
 
