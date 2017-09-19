@@ -66,6 +66,9 @@ class Menu
   def show_bio(character)
     puts "The character's name is: #{character.name}"
     puts "The character's birth year is: #{character.birth_year}"
+    puts "The character's eye color is: #{character.eye_color}"
+    puts "The character's gender is: #{character.gender}"
+    puts "The character's hair color is: #{character.hair_color}"
     puts "The character's Homeworld is: #{character.homeworld}"
     puts "The character's Species is: #{character.species}"
     puts "The character's Starships are: #{character.starships}"
